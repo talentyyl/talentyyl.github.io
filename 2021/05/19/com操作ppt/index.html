@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="com、ppt、ProgID、CLSID," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。提词器代码    com 操作 ppt 代">
+<meta name="keywords" content="com、ppt、ProgID、CLSID">
+<meta property="og:type" content="article">
+<meta property="og:title" content="com操作ppt">
+<meta property="og:url" content="http://yoursite.com/2021/05/19/com操作ppt/index.html">
+<meta property="og:site_name" content="yyl&#39;s blogs">
+<meta property="og:description" content="晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。提词器代码    com 操作 ppt 代码 核心代码 123456789101112131415161718192021">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-05-18T18:21:15.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="com操作ppt">
+<meta name="twitter:description" content="晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。提词器代码    com 操作 ppt 代码 核心代码 123456789101112131415161718192021">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '风尘浪子'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/05/19/com操作ppt/"/>
+
+
+
+
+
+  <title>com操作ppt | yyl's blogs</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">yyl's blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/05/19/com操作ppt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="风尘浪子">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yyl's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">com操作ppt</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-05-19T21:00:00+08:00">
+                2021-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/com/" itemprop="url" rel="index">
+                    <span itemprop="name">com</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h5 id="晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用-com-操作-ppt，说来惭愧，之前就没有研究过-com-，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用-github-中迁出，学习下。"><a href="#晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用-com-操作-ppt，说来惭愧，之前就没有研究过-com-，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用-github-中迁出，学习下。" class="headerlink" title="晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。"></a>晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣<a href="https://www.bilibili.com/video/BV1kK4y1A77e" target="_blank" rel="noopener">程序员开发一个提词器软件</a>，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。</h5><p><a href="https://github.com/yangzhongke/PhoneAsPrompter" target="_blank" rel="noopener">提词器代码</a>    <a href="https://github.com/yangzhongke/Zack.ComObjectHelpers.git" target="_blank" rel="noopener">com 操作 ppt 代码</a></p>
+<p>核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">// 备注、前一页、下一页</span><br><span class="line">app.Run(async (context) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    var request = context.Request;</span><br><span class="line">    var response = context.Response;</span><br><span class="line">    string path = request.Path.Value;</span><br><span class="line">    bool hasRun = true;</span><br><span class="line">    if (path == &quot;/getNote&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">    response.StatusCode = 200;</span><br><span class="line">    string notesText = null;                   </span><br><span class="line">    this.Invoke(new Action(()=&gt; &#123;</span><br><span class="line">    if (this.presentation == null)</span><br><span class="line">    &#123;</span><br><span class="line">    return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    try</span><br><span class="line">    &#123;</span><br><span class="line">    dynamic notesPage = T(T(T(T(presentation.SlideShowWindow).View).Slide).NotesPage);</span><br><span class="line">    notesText = GetInnerText(notesPage);</span><br><span class="line">    &#125;</span><br><span class="line">    catch (COMException ex)</span><br><span class="line">    &#123;</span><br><span class="line">    notesText = &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;));</span><br><span class="line">    await response.WriteAsync(notesText);</span><br><span class="line">    &#125;</span><br><span class="line">    else if (path == &quot;/next&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">    	response.StatusCode = 200;</span><br><span class="line">    	this.Invoke(new Action(() =&gt; &#123;</span><br><span class="line">            if (this.presentation == null)</span><br><span class="line">            &#123;</span><br><span class="line">            return;</span><br><span class="line">            &#125;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                T(T(this.presentation.SlideShowWindow).View).Next();</span><br><span class="line">                hasRun = true;</span><br><span class="line">            &#125;</span><br><span class="line">            catch(COMException e)</span><br><span class="line">            &#123;</span><br><span class="line">                hasRun = false;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;));</span><br><span class="line">        if (hasRun)</span><br><span class="line">        &#123;</span><br><span class="line">            await response.WriteAsync(&quot;OK&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            await response.WriteAsync(&quot;NO&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else if (path == &quot;/previous&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">    	response.StatusCode = 200;</span><br><span class="line">    	this.Invoke(new Action(() =&gt; &#123;</span><br><span class="line">            if (this.presentation == null)</span><br><span class="line">            &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                T(T(this.presentation.SlideShowWindow).View).Previous();</span><br><span class="line">                hasRun = true;</span><br><span class="line">            &#125;</span><br><span class="line">            catch (COMException e)</span><br><span class="line">            &#123;</span><br><span class="line">                hasRun = false;</span><br><span class="line">            &#125;</span><br><span class="line">            &#125;));</span><br><span class="line">        if (hasRun)</span><br><span class="line">        &#123;</span><br><span class="line">            await response.WriteAsync(&quot;OK&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            await response.WriteAsync(&quot;NO&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">    	response.StatusCode = 404;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">string filename = openFileDialog.FileName;</span><br><span class="line">this.ClearComRefs();</span><br><span class="line">dynamic pptApp = T(PowerPointHelper.CreatePowerPointApplication());</span><br><span class="line">pptApp.Visible = true;</span><br><span class="line">dynamic presentations = T(pptApp.Presentations);</span><br><span class="line">this.presentation = T(presentations.Open(filename));</span><br><span class="line">T(this.presentation.SlideShowSettings).Run();</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private dynamic T(dynamic comObj)</span><br><span class="line">&#123;</span><br><span class="line">	return this.comRefTracker.T(comObj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static class PowerPointHelper</span><br><span class="line">&#123;</span><br><span class="line">    public static bool IsPowerPointInstalled()</span><br><span class="line">    &#123;</span><br><span class="line">    	return ComHelper.IsProgIDInstalled(&quot;PowerPoint.Application&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static object CreatePowerPointApplication()</span><br><span class="line">    &#123;</span><br><span class="line">    	return ComHelper.CreateInstanceFromProgID(&quot;PowerPoint.Application&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static object CreatePowerPointApplication(this COMReferenceTracker t)</span><br><span class="line">    &#123;</span><br><span class="line">    	var app = CreatePowerPointApplication();</span><br><span class="line">    	return t.T(app);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public static class ComHelper</span><br><span class="line">&#123;</span><br><span class="line">        public static bool IsProgIDInstalled(string progID)</span><br><span class="line">        &#123;</span><br><span class="line">            return Registry.ClassesRoot.GetSubKeyNames().Contains(progID);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public static object CreateInstanceFromProgID(string progID, bool throwOnError=true)</span><br><span class="line">        &#123;</span><br><span class="line">            Type type = Type.GetTypeFromProgID(progID, throwOnError);</span><br><span class="line">            return Activator.CreateInstance(type);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public static string GetComObjectDescription(object comObject)</span><br><span class="line">        &#123;</span><br><span class="line">            if(comObject==null)</span><br><span class="line">            &#123;</span><br><span class="line">                return &quot;null&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">            StringBuilder sb = new StringBuilder();</span><br><span class="line">            sb.Append(&quot;TypeName:&quot;).AppendLine(TypeDescriptor.GetClassName(comObject));</span><br><span class="line">            sb.AppendLine(&quot;Properties:&quot;);</span><br><span class="line">            //https://github.com/dotnet/runtime/issues/47248</span><br><span class="line">            //TypeDescriptor.GetProperties depends on System.Windows.Forms</span><br><span class="line">            foreach (PropertyDescriptor p in TypeDescriptor.GetProperties(comObject))</span><br><span class="line">            &#123;</span><br><span class="line">                sb.AppendLine($&quot;Name:&#123;p.Name&#125;,DisplayName:&#123;p.DisplayName&#125;,PropertyType:&#123;p.PropertyType&#125;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            return sb.ToString();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public static string TypeName(object comObject)</span><br><span class="line">        &#123;</span><br><span class="line">            return TypeDescriptor.GetClassName(comObject);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>duang duang duang 终于找到了核心代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Type type = Type.GetTypeFromProgID(progID, throwOnError);</span><br><span class="line">return Activator.CreateInstance(type);</span><br></pre></td></tr></table></figure>
+<p>方法 Type.GetTypeFromProgID 的解释是：获取与指定程序标识符 (ProgID) 关联的类型 </p>
+<p>不太明白 ProgID 是什么，于是搜索，又发现了一个新的单词 CLSID</p>
+<p>以下是找到的比较清晰的网络解释，<a href="https://www.cnblogs.com/cchyao/archive/2010/09/05/1818463.html" target="_blank" rel="noopener">来源</a></p>
+<p>使用 win + r，输入 regedit ，打开注册表编辑器，找到 HKEY_CLASSES_ROOT，在此关键字之下，可以看到有个 CLSID 关键字。在 CLSID 关键字之下有系统中安装的所有组件的 CLSID ， 其实 CLSID 就是GUID（例如： 00000010-0000-0010-8000-00AA006D2EA4 ），是区分每个系统组件唯一的识别码。此外，我们通过 CLSID 可以快捷的打开系统组件，这样可以让我们的操作更加方便。 </p>
+<p>HKEY_CLASSES_ROOT的开头，列出的将是各种应用程序所注册的文件扩展名。在扩展名之后，可以看到许多其他的名字。此类名字的大多数被称作是ProgID，表示是程序员定义的标识符。某些名称表示的不是ProgID而是一些特殊的关键字.</p>
+<p>如</p>
+<ul>
+<li>CLSID</li>
+<li>AppID—此关键字下的子关键字的作用是将某个APPID（应用程序ID）映射成某个远程服务器名称。分式COM（DCOM）将用到此关键字。</li>
+<li>组件类别—注册表的这一分支可以将CATID（组件类别ID）映射成某个特定的组件类别。</li>
+<li>Interface—此关键字用于将IID映射成与某个接口相关的信息。这些信息主要用于在跨进程边界使用接口的情况。</li>
+<li>Licenses—保存的是授权使用COM组件的一些认可信息。</li>
+<li>TypeLib—类型库关键字所保存的是关于接口成员函数所用参数的信息。另外还有其他一些信息。此关键字可以将一个LIBID映射成存储类型库的文件名称。</li>
+</ul>
+<p>ProgID：所谓ProgID指的是程序员给某个CLSID指定的一个程序员易记的名称。</p>
+<p>ProgID 命名约定</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Program&gt;.&lt;Component&gt;.&lt;Version&gt;</span><br></pre></td></tr></table></figure>
+<p>其中如 PowerPoint.Application 是版本无关 ProgID，根据其值可在 CLSID 下找到相应键，以此找到相应信息，如组件最新版本信息。PowerPoint.Appplication.16 是版本相关的 ProgID，根据其 CLSID 值可在找到该版本组件的信息。 </p>
+<p>ProgID 注册表格式</p>
+<p>ProgID 及与版本无关的 ProgID 被列在组件 CLSID 下面。ProgID 的主要作用是获取相应的 CLSID。在每一个 CLSID 项中查找查个 ProgID 将是非常低效的。因此在 的下面也将直接列出 ProgID。由于 ProgID不是针对最终用户而定义的，因此 ProgID 关键字的缺省值为用户易记的名称。在 之下有一个名为CLSID的关键字，其缺省值为组件的 CLSID。</p>
+<p>与版本号无关的 ProgID 也直接被列在 HKEY_CLASSES_ROOT 下面。它们还有另外一个关键字 CurVer，其缺少值为组件当前版本的 ProgID </p>
+<p>ProgID 和 CLSID 的转换</p>
+<p>CLSIDFromProgID</p>
+<p>ProgIDFromCLSID</p>
+<p>组件的自注册</p>
+<p>为把组件注册到注册表，在DLL一定要输出如下两个函数：</p>
+<p>STDAPI DllRegisterServer();   // 注册</p>
+<p>STDAPI DllUnregisterServer();  // 反注册</p>
+<p>我们使用 REGSVR32.exe 注册某个组件或反注册某个组，其实就是调用这两个函数的。</p>
+<h5 id="Win10-CLSID-大全"><a href="#Win10-CLSID-大全" class="headerlink" title="Win10 CLSID 大全"></a>Win10 CLSID 大全</h5><p>添加网络位置</p>
+<p>shell:::{D4480A50-BA28-11d1-8E75-00C04FA31A86}</p>
+<p>管理工具</p>
+<p>shell:::{D20EA4E1-3957-11d2-A40B-0C5020524153}</p>
+<p>所有控制面板项</p>
+<p>shell:::{21EC2020-3AEA-1069-A2DD-08002B30309D}</p>
+<p>所有设置</p>
+<p>shell:::{5ED4F38C-D3FF-4D61-B506-6820320AEBFE}</p>
+<p>所有任务</p>
+<p>shell:::{ED7BA470-8E54-465E-825C-99712043E01C}</p>
+<p>应用</p>
+<p>shell:::{4234d49b-0245-4df3-b780-3893943456e1}</p>
+<p>AppSuggestedLocations</p>
+<p>shell:::{c57a6066-66a3-4d91-9eb9-41532179f0a5}</p>
+<p>ActiveX缓存文件夹</p>
+<p>shell:::{88C6C381-2E85-11D0-94DE-444553540000}</p>
+<p>自动播放</p>
+<p>shell:::{9C60DE1E-E5FC-40f4-A487-460851A8D915}</p>
+<p>备份和还原（Windows7）</p>
+<p>shell:::{B98A2BEA-7D42-4558-8BD1-832F41BAC6FD}</p>
+<p>BitLocker驱动器加密</p>
+<p>shell:::{D9EF8727-CAC2-4e60-809E-86F80A666C91}</p>
+<p>蓝牙设备</p>
+<p>shell:::{28803F59-3A75-4058-995F-4EE5503B023C}</p>
+<p>Briefcase</p>
+<p>shell:::{85BBD920-42A0-1069-A2E4-08002B30309D}</p>
+<p>Cabinet Shell文件夹</p>
+<p>shell:::{0CD7A5C0-9F37-11CE-AE65-08002B2E1262}</p>
+<p>CLSID_AppInstanceFolder</p>
+<p>shell:::{64693913-1c21-4f30-a98f-4e52906d3b56}</p>
+<p>CLSID_DBFolder</p>
+<p>shell:::{b2952b16-0e07-4e5a-b993-58c52cb94cae}</p>
+<p>CLSID_DBFolderBoth</p>
+<p>shell:::{1bef2128-2f96-4500-ba7c-098dc0049cb2}</p>
+<p>CLSID_SearchHome</p>
+<p>shell:::{9343812e-1c37-4a49-a12e-4b2d810d956b}</p>
+<p>CLSID_StartMenuCommandingProviderFolder</p>
+<p>shell:::{a00ee528-ebd9-48b8-944a-8942113d46ac}</p>
+<p>CLSID_StartMenuLauncherProviderFolder</p>
+<p>shell:::{98F275B4-4FFF-11E0-89E2-7B86DFD72085}</p>
+<p>CLSID_StartMenuPathCompleteProviderFolder</p>
+<p>shell:::{e345f35f-9397-435c-8f95-4e922c26259e}</p>
+<p>CLSID_StartMenuProviderFolder</p>
+<p>shell:::{daf95313-e44d-46af-be1b-cbacea2c3065}</p>
+<p>命令文件夹</p>
+<p>shell:::{437ff9c0-a07f-4fa0-af80-84b6c6440a16}</p>
+<p>Common Places FS Folder</p>
+<p>shell:::{d34a6ca6-62c2-4c34-8a7c-14709c1ad938}</p>
+<p>CompressedFolder</p>
+<p>shell:::{E88DCCE0-B7B3-11d1-A9F0-00AA0060FA31}</p>
+<p>连接到</p>
+<p>shell:::{38A98528-6CBF-4CA9-8DC0-B1E1D10F7B1B}</p>
+<p>控制面板</p>
+<p>shell:::{26EE0668-A00A-44D7-9371-BEB064C98683}</p>
+<p>控制面板</p>
+<p>shell:::{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}</p>
+<p>凭据管理器</p>
+<p>shell:::{1206F5F1-0569-412C-8FEC-3204630DFB70}</p>
+<p>默认程序</p>
+<p>shell:::{17cd9488-1228-4b2f-88ce-4298e93e0966}</p>
+<p>Delegate folder that appears in Computer</p>
+<p>shell:::{b155bdf8-02f0-451e-9a26-ae317cfd7779}</p>
+<p>Delegate folder that appears in Users Files Folder</p>
+<p>shell:::{DFFACDC5-679F-4156-8947-C5C76BC0B67F}</p>
+<p>桌面</p>
+<p>shell:::{00021400-0000-0000-C000-000000000046}</p>
+<p>设备中心初始化</p>
+<p>shell:::{C2B136E2-D50E-405C-8784-363C582BF43E}</p>
+<p>DevicePairingFolder Initialization</p>
+<p>shell:::{AEE2420F-D50E-405C-8784-363C582BF45A}</p>
+<p>设备和打印机</p>
+<p>shell:::{A8A91A66-3A7D-4424-8D24-04E180695C7A}</p>
+<p>显示</p>
+<p>shell:::{C555438B-3C23-4769-A71F-B6D3D9B6053A}</p>
+<p>DLNA Content Directory Data Source</p>
+<p>shell:::{D2035EDF-75CB-4EF1-95A7-410D9EE17170}</p>
+<p>DXP</p>
+<p>shell:::{8FD8B88D-30E1-4F25-AC2B-553D3D65F0EA}</p>
+<p>轻松使用设置中心</p>
+<p>shell:::{D555645E-D4F8-4c29-A827-D93C859C4F2A}</p>
+<p>E-mail</p>
+<p>shell:::{2559a1f5-21d7-11d4-bdaf-00c04f60b9f0}</p>
+<p>增强存储数据源</p>
+<p>shell:::{9113A02D-00A3-46B9-BC5F-9C04DADDD5D7}</p>
+<p>Explorer Browser Results Folder</p>
+<p>shell:::{418c8b64-5463-461d-88e0-75e2afa3c6fa}</p>
+<p>收藏夹</p>
+<p>shell:::{323CA680-C24D-4099-B94D-446DD2D7249E}</p>
+<p>文件备份目录</p>
+<p>shell:::{877ca5ac-cb41-4842-9c69-9136e42d47e2}</p>
+<p>文件夹选项</p>
+<p>shell:::{6DFD7C5C-2451-11d3-A299-00C04F8EF6AF}</p>
+<p>文件历史记录</p>
+<p>shell:::{F6B6E965-E9B2-444B-9286-10C9152EDBC5}</p>
+<p>FileHistoryDataSource</p>
+<p>shell:::{2F6CE85C-F9EE-43CA-90C7-8A9BD53A2467}</p>
+<p>文件夹快捷方式</p>
+<p>shell:::{0AFACED1-E828-11D1-9187-B532F1E9575D}</p>
+<p>字体设置</p>
+<p>shell:::{93412589-74D4-4E4E-AD0E-E0CB621440FD}</p>
+<p>字体</p>
+<p>shell:::{BD84B380-8CA2-1069-AB1D-08000948F534}</p>
+<p>Frequent folders</p>
+<p>shell:::{3936E9E4-D92C-4EEE-A85A-BC16D5EA0819}</p>
+<p>Fusion Cache</p>
+<p>shell:::{1D2680C9-0E2A-469d-B787-065558BC7D43}</p>
+<p>游戏</p>
+<p>shell:::{ED228FDF-9EA8-4870-83b1-96b02CFE0D52}</p>
+<p>获得程序</p>
+<p>shell:::{15eae92e-f17a-4431-9f28-805e482dafd4}</p>
+<p>历史</p>
+<p>shell:::{FF393560-C2A7-11CF-BFF4-444553540000}</p>
+<p>Homegroup</p>
+<p>shell:::{6785BFAC-9D2D-4be5-B7E2-59937E8FB80A}</p>
+<p>HomeGroup</p>
+<p>shell:::{67CA7650-96E6-4FDD-BB43-A8E774F73A57}</p>
+<p>Homegroup</p>
+<p>shell:::{B4FB3F98-C1EA-428d-A78A-D1F5659CBA93}</p>
+<p>IE History and Feeds Shell Data Source for Windows Search</p>
+<p>shell:::{11016101-E366-4D22-BC06-4ADA335C892B}</p>
+<p>IE RSS Feeds Folder</p>
+<p>shell:::{9a096bb5-9dc3-4d1c-8526-c3cbf991ea4e}</p>
+<p>已安装更新</p>
+<p>shell:::{d450a8a1-9568-45c7-9c0e-b4f9fb4537bd}</p>
+<p>语言</p>
+<p>shell:::{BF782CC9-5A52-4A17-806C-2A894FFEEAC5}</p>
+<p>LayoutFolder</p>
+<p>shell:::{328B0346-7EAF-4BBE-A479-7CB88A095F5B}</p>
+<p>库</p>
+<p>shell:::{031E4825-7B94-4dc3-B131-E946B44C8DD5}</p>
+<p>Libraries delegate folder that appears in Users Files Folder</p>
+<p>shell:::{896664F7-12E1-490f-8782-C0835AFD98FC}</p>
+<p>库文件夹</p>
+<p>shell:::{a5a3563a-5755-4a6f-854e-afa3230b199f}</p>
+<p>Location Folder</p>
+<p>shell:::{267cf8a9-f4e3-41e6-95b1-af881be130ff}</p>
+<p>管理无线网络</p>
+<p>shell:::{1FA9085F-25A2-489B-85D4-86326EEDCD87}</p>
+<p>媒体服务器</p>
+<p>shell:::{289AF617-1CC3-42A6-926C-E6A863F0E3BA}</p>
+<p>Microsoft FTP Folder</p>
+<p>shell:::{63da6ec0-2e98-11cf-8d82-444553540000}</p>
+<p>Microsoft Office Outlook</p>
+<p>shell:::{89D83576-6BD1-4c86-9454-BEB04E94C819}</p>
+<p>我的文档</p>
+<p>shell:::{450D8FBA-AD25-11D0-98A8-0800361B1103}</p>
+<p>网络</p>
+<p>shell:::{208D2C60-3AEA-1069-A2D7-08002B30309D}</p>
+<p>网络</p>
+<p>shell:::{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}</p>
+<p>网络和共享中心</p>
+<p>shell:::{8E908FC9-BECC-40f6-915B-F4CA0E70D03D}</p>
+<p>网络连接</p>
+<p>shell:::{7007ACC7-3202-11D1-AAD2-00805FC1270E}</p>
+<p>网络连接</p>
+<p>shell:::{992CFFA0-F557-101A-88EC-00DD010CCC48}</p>
+<p>通知区域图标</p>
+<p>shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9}</p>
+<p>离线文件</p>
+<p>shell:::{BD7A2E7B-21CB-41b2-A086-B309680C6B7E}</p>
+<p>离线文件夹</p>
+<p>shell:::{AFDB1F70-2A4C-11d2-9039-00C04F8EEB3E}</p>
+<p>OneDrive</p>
+<p>shell:::{018D5C66-4533-4307-9B53-224DE2ED1FE6}</p>
+<p>个性化</p>
+<p>shell:::{ED834ED6-4B5A-4bfe-8F11-A626DCB6A921}</p>
+<p>照片</p>
+<p>shell:::{45e8e0e8-7ae9-41ad-a9e8-594972716684}</p>
+<p>可移动设备</p>
+<p>shell:::{35786D3C-B075-49b9-88DD-029876E11C01}</p>
+<p>电源选项</p>
+<p>shell:::{025A5937-A6BE-4686-A844-36FE4BEC8B6D}</p>
+<p>Previous Versions</p>
+<p>shell:::{9DB7A13C-F208-4981-8353-73CC61AE2783}</p>
+<p>Previous Versions Results Delegate Folder</p>
+<p>shell:::{a3c3d402-e56c-4033-95f7-4885e80b0111}</p>
+<p>Previous Versions Results Folder</p>
+<p>shell:::{f8c2ab3b-17bc-41da-9758-339d7dbf2d88}</p>
+<p>打印机</p>
+<p>shell:::{2227A280-3AEA-1069-A2DE-08002B30309D}</p>
+<p>打印机</p>
+<p>shell:::{863aa9fd-42df-457b-8e4d-0de1b8015c60}</p>
+<p>printhood delegate folder</p>
+<p>shell:::{ed50fc29-b964-48a9-afb3-15ebb9b97f36}</p>
+<p>程序和功能</p>
+<p>shell:::{7b81be6a-ce2b-4676-a29e-eb907a5126c5}</p>
+<p>公用</p>
+<p>shell:::{4336a54d-038b-4685-ab02-99bb52d3fb8b}</p>
+<p>最近的文件夹</p>
+<p>shell:::{22877a6d-37a1-461a-91b0-dbda5aaebc99}</p>
+<p>Recent Items Instance Folder</p>
+<p>shell:::{4564b25e-30cd-4787-82ba-39e73a750b14}</p>
+<p>恢复</p>
+<p>shell:::{9FE63AFD-59CF-4419-9775-ABCC3849F861}</p>
+<p>回收站</p>
+<p>shell:::{645FF040-5081-101B-9F08-00AA002F954E}</p>
+<p>远程桌面连接</p>
+<p>shell:::{241D7C96-F8BF-4F85-B01F-E2B043341A4B}</p>
+<p>可移动设备</p>
+<p>shell:::{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}</p>
+<p>可移移除储设备</p>
+<p>shell:::{a6482830-08eb-41e2-84c1-73920c2badb9}</p>
+<p>Results Folder</p>
+<p>shell:::{2965e715-eb66-4719-b53f-1672673bbefa}</p>
+<p>运行</p>
+<p>shell:::{2559a1f3-21d7-11d4-bdaf-00c04f60b9f0}</p>
+<p>搜索</p>
+<p>shell:::{04731B67-D933-450a-90E6-4ACD2E9408FE}</p>
+<p>搜索</p>
+<p>shell:::{2559a1f0-21d7-11d4-bdaf-00c04f60b9f0}</p>
+<p>Search Connector Folder</p>
+<p>shell:::{72b36e70-8700-42d6-a7f7-c9ab3323ee51}</p>
+<p>安全和维护</p>
+<p>shell:::{BB64F8A7-BEE7-4E1A-AB8D-7D8273F7FDB6}</p>
+<p>设定程序访问和计算机的默认值</p>
+<p>shell:::{2559a1f7-21d7-11d4-bdaf-00c04f60b9f0}</p>
+<p>Shell DocObject Viewer</p>
+<p>shell:::{E7E4BC40-E76A-11CE-A9BB-00AA004AE837}</p>
+<p>Shell File System Folder</p>
+<p>shell:::{0E5AAE11-A475-4c5b-AB00-C66DE400274E}</p>
+<p>Shell File System Folder</p>
+<p>shell:::{F3364BA0-65B9-11CE-A9BA-00AA004AE837}</p>
+<p>显示桌面</p>
+<p>shell:::{3080F90D-D7AD-11D9-BD98-0000947B0257}</p>
+<p>语音识别</p>
+<p>shell:::{58E3C745-D971-4081-9034-86E34B30836A}</p>
+<p>开始菜单</p>
+<p>shell:::{48e7caab-b918-4e58-a94d-505519c795dc}</p>
+<p>存储空间</p>
+<p>shell:::{F942C606-0914-47AB-BE56-1321B8035096}</p>
+<p>StreamBackedFolder</p>
+<p>shell:::{EDC978D6-4D53-4b2f-A265-5805674BE568}</p>
+<p>Subscription Folder</p>
+<p>shell:::{F5175861-2688-11d0-9C5E-00AA00A45957}</p>
+<p>窗口间切换</p>
+<p>shell:::{3080F90E-D7AD-11D9-BD98-0000947B0257}</p>
+<p>同步中心</p>
+<p>shell:::{9C73F5E5-7AE7-4E32-A8E8-8D23B85255BF}</p>
+<p>Sync Center Conflict Delegate Folder</p>
+<p>shell:::{E413D040-6788-4C22-957E-175D1C513A34}</p>
+<p>Sync Center Conflict Folder</p>
+<p>shell:::{289978AC-A101-4341-A817-21EBA7FD046D}</p>
+<p>Sync Results Delegate Folder</p>
+<p>shell:::{BC48B32F-5910-47F5-8570-5074A8A5636A}</p>
+<p>Sync Results Folder</p>
+<p>shell:::{71D99464-3B6B-475C-B241-E15883207529}</p>
+<p>Sync Setup Delegate Folder</p>
+<p>shell:::{F1390A9A-A3F4-4E5D-9C5F-98F3BD8D935C}</p>
+<p>Sync Setup Folder</p>
+<p>shell:::{2E9E59C0-B437-4981-A647-9C34B9B90891}</p>
+<p>系统</p>
+<p>shell:::{BB06C0E4-D293-4f75-8A90-CB05B6477EEE}</p>
+<p>系统还原</p>
+<p>shell:::{3f6bc534-dfa1-4ab4-ae54-ef25a74e0107}</p>
+<p>任务栏设置</p>
+<p>shell:::{0DF44EAA-FF21-4412-828E-260A8728E7F1}</p>
+<p>临时Internet文件</p>
+<p>shell:::{7BD29E00-76C1-11CF-9DD0-00A0C9034933}</p>
+<p>临时Internet文件</p>
+<p>shell:::{7BD29E01-76C1-11CF-9DD0-00A0C9034933}</p>
+<p>The Internet</p>
+<p>shell:::{871C5380-42A0-1069-A2EA-08002B30309D}</p>
+<p>设备</p>
+<p>shell:::{5b934b42-522b-4c34-bbfe-37a3ef7b9c90}</p>
+<p>此电脑</p>
+<p>shell:::{20D04FE0-3AEA-1069-A2D8-08002B30309D}</p>
+<p>此电脑</p>
+<p>shell:::{5E5F29CE-E0A8-49D3-AF32-7A7BDC173478}</p>
+<p>疑难解答</p>
+<p>shell:::{C58C4893-3BE0-4B45-ABB5-A63E4B8C8651}</p>
+<p>用户账户</p>
+<p>shell:::{60632754-c523-4b62-b45c-4172da012619}</p>
+<p>用户账户</p>
+<p>hell:::{7A9D77BD-5403-11d2-8785-2E0420524153}</p>
+<p>User Pinned</p>
+<p>shell:::{1f3427c8-5c10-4210-aa03-2ee45287d668}</p>
+<p>UsersFiles</p>
+<p>shell:::{59031a47-3f72-44a7-89c5-5595fe6b30ee}</p>
+<p>Windows Defender</p>
+<p>shell:::{D8559EB9-20C0-410E-BEDA-7ED416AECC2A}</p>
+<p>Windows功能</p>
+<p>shell:::{67718415-c450-4f3c-bf8a-b487642dc39b}</p>
+<p>Windows防火墙</p>
+<p>shell:::{4026492F-2F69-46B8-B9BF-5654FC07E423}</p>
+<p>Windows移动中心</p>
+<p>shell:::{5ea4f148-308c-46d7-98a9-49041b1dd468}</p>
+<p>Windows 安全</p>
+<p>shell:::{2559a1f2-21d7-11d4-bdaf-00c04f60b9f0}</p>
+<p>工作文件夹</p>
+<p>shell:::{ECDB0924-4208-451E-8EE0-373C0956DE16}</p>
+<p>WWan Shell Folder</p>
+<p>shell:::{87630419-6216-4ff8-a1f0-143562d16d5c}</p>
+<p>使用 win + r 输入即可快速打开</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/com、ppt、ProgID、CLSID/" rel="tag"># com、ppt、ProgID、CLSID</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/23/劳动仲裁用到的网址/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="风尘浪子" />
+          <p class="site-author-name" itemprop="name">风尘浪子</p>
+           
+              <p class="site-description motion-element" itemprop="description">.NET Core</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-link"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://example.com/" title="yyl" target="_blank">yyl</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/artech/" title="Artech" target="_blank">Artech</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/farb/" title="tbk至简" target="_blank">tbk至简</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/jesse2013/" title="腾飞" target="_blank">腾飞</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/RainingNight/" title="雨夜朦胧" target="_blank">雨夜朦胧</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用-com-操作-ppt，说来惭愧，之前就没有研究过-com-，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用-github-中迁出，学习下。"><span class="nav-number">1.</span> <span class="nav-text">晚上恰饭的时候，打开哔哩哔哩，看到杨中科老师又更新了视频，这期视频比较感兴趣程序员开发一个提词器软件，杨老师在视频中说到用 com 操作 ppt，说来惭愧，之前就没有研究过 com ，都是直接找别人封装好的库，因此比较好奇怎么实现的，于是把代码用 github 中迁出，学习下。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Win10-CLSID-大全"><span class="nav-number">2.</span> <span class="nav-text">Win10 CLSID 大全</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">风尘浪子</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
